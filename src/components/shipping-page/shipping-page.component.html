@@ -1,0 +1,67 @@
+<div *ngIf="cartProduct.length>0">
+    <div *ngFor="let product of cartProduct">
+        <mat-card>
+            <div class="product-card">
+                <div class="product-img">
+                    <img mat-card-avatar [src]="product.images[0]" alt="not-loaded">
+                </div>
+                <div class="product-desc">
+                    <p><b>{{product.title}}</b></p>
+                    <p>{{product.description}}</p>
+                    <br>
+                    <p><b></b>Rs: {{product.price}}<b></b></p>
+                </div>
+                <div class="additional-button">
+                    <div class="delete-button">
+                        <button mat-raised-button color="primary"
+                            (click)="removeFromCart(cartProduct,product.id)">Delete</button>
+                    </div>
+                    <div class="count-container">
+                        <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon"
+                            (click)="addCount(cartProduct,product.id)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <div class="circle-icon">
+                            <mat-icon>lens</mat-icon>
+                            <span class="value">{{product.count}}</span>
+                        </div>
+                        <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon"
+                            (click)="reduceCount(cartProduct,product.id,product.count)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<mat-toolbar class="toolbar">
+    <div>
+        <p><b>TOTAL AMOUNT</b></p>
+        <p>Rs:{{invoiceAmount}}</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="downloadPDF()"> Generate Invoice</button>
+</mat-toolbar>
+
+<div class="Product-table">
+
+    <table id="ProductTable">
+        <caption>Order Details</caption>
+        <thead>
+            <tr>
+                <th *ngFor="let header of headers">{{ header }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartProduct">
+                <td>{{ item.description }}</td>
+                <td>{{ item.count }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.count*item.price }}</td>
+            </tr>
+        </tbody>
+        <p class="right-align">Sum Amount Rs:{{invoiceAmount}}</p>
+    </table>
+
+
+</div>
